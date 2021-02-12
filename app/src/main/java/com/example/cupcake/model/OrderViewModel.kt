@@ -14,16 +14,16 @@ private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
 
 class OrderViewModel : ViewModel() {
     private val _quantity = MutableLiveData<Int>()
-    val quantity : LiveData<Int> = _quantity
+    val quantity: LiveData<Int> = _quantity
 
     private val _flavor = MutableLiveData<String>()
-    val flavor : LiveData<String> = _flavor
+    val flavor: LiveData<String> = _flavor
 
     private val _date = MutableLiveData<String>()
-    val date : LiveData<String> = _date
+    val date: LiveData<String> = _date
 
     private val _price = MutableLiveData<Double>()
-    val price : LiveData<String> = Transformations.map(_price) {
+    val price: LiveData<String> = Transformations.map(_price) {
         NumberFormat.getCurrencyInstance().format(it)
     }
 
@@ -50,6 +50,7 @@ class OrderViewModel : ViewModel() {
     fun hasNoFlavorSet(): Boolean {
         return _flavor.value.isNullOrEmpty()
     }
+
     private fun updatePrice() {
         var calculatedPrice = (quantity.value ?: 0) * PRICE_PER_CUPCAKE
         //if user selected the first options (today) for pickup, add the surcharge
@@ -58,8 +59,9 @@ class OrderViewModel : ViewModel() {
         }
         _price.value = calculatedPrice
     }
+
     //function create and return a list of dates starting with the current date and the following 3 dates
-    fun getPickupOptions() : List<String> {
+    fun getPickupOptions(): List<String> {
         val options = mutableListOf<String>()
         val formatter = SimpleDateFormat("E MMM d", Locale.getDefault())
         val calendar = Calendar.getInstance()
@@ -70,6 +72,7 @@ class OrderViewModel : ViewModel() {
         }
         return options
     }
+
     //function for initializing the properties
     fun resetOrder() {
         _quantity.value = 0
